@@ -331,6 +331,9 @@ export default class PlayCheckerGame extends LightningElement {
     loadGameData(){
         console.log('this.gameRecord :' + JSON.stringify(this.gameRecord));
         this.gameTitle = (this.gameRecord.Player_1__c == undefined ? '' : this.gameRecord.Player_1__r.Name) + ' VS ' + (this.gameRecord.Player_2__c == undefined ? '' : this.gameRecord.Player_2__r.Name);
+        if(this.gameRecord.Status__c == 'Completed'){
+            this.gameTitle += ' (' + this.gameRecord.Game_Summary__c +')';
+        }
 
         this.isTurnUser1 = this.gameRecord.Player_Turn__c == 'P1';
         this.isCurrentUserIsP1 = this.gameRecord.Player_1__c == currentUserId;

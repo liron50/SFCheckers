@@ -408,7 +408,7 @@ function isKingCanEat(playerNum, opponent, row, col, dirVert, dirHorz){
                 
                     
                 <div class="boardTitle">
-                    {!gameRecord.Player_1__r.Name} VS {!gameRecord.Player_2__r.Name}
+                    {!gameRecord.Player_1__r.Name} VS {!gameRecord.Player_2__r.Name} {!IF(gameRecord.Status__c == 'Completed', '(' + gameRecord.Game_Summary__c + ')', '')}
                 </div>
                 
                 <div class="playerImg">

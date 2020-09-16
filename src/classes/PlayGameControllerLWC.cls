@@ -235,21 +235,21 @@ public with sharing class PlayGameControllerLWC{
         //Check if game completed
         if(p1Tools.isEmpty()){
             gameRecord.Status__c = 'Completed';
-            gameRecord.Game_Summary__c = gameRecord.Player_2__r.Name + ' won.';
+            gameRecord.Game_Summary__c = gameRecord.Player_2__r.Name + ' won';
         }
         else if(p2Tools.isEmpty()){
             gameRecord.Status__c = 'Completed';
-            gameRecord.Game_Summary__c = gameRecord.Player_1__r.Name + ' won.';
+            gameRecord.Game_Summary__c = gameRecord.Player_1__r.Name + ' won';
         }
         else if(anyValidMovement(playerNum, pTools, allCellsMap) == false){    //Check if the next player have any valid movement. If not it is a draw
             
             gameRecord.Status__c = 'Completed';
-            gameRecord.Game_Summary__c = 'Draw. ' + (playerNum == 1 ? gameRecord.Player_2__r.Name : gameRecord.Player_1__r.Name) + ' does not left any valid movements.';
+            gameRecord.Game_Summary__c = 'Draw. ' + (playerNum == 1 ? gameRecord.Player_2__r.Name : gameRecord.Player_1__r.Name) + ' does not left any valid movements';
         }
         
         gameRecord.Player_1_Tools__c = JSON.serialize(p1Tools);
         gameRecord.Player_2_Tools__c = JSON.serialize(p2Tools);
-        gameRecord.Player_Turn__c = playerNum == 1 ? 'P2' : 'P1';
+        gameRecord.Player_Turn__c = gameRecord.Status__c == 'Completed' ? 'N' : (playerNum == 1 ? 'P2' : 'P1');
         
         //Should save the player status after each move!!!
         update gameRecord;
