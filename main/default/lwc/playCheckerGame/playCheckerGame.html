@@ -1,0 +1,159 @@
+<template>
+    <template if:true={gameRecord}></template>
+        <table style="width: auto;">
+            <tr>
+                <td style="width:75%">
+                    <div class="boardstyle">
+                        <div class="boardTitle">
+                            {gameTitle}
+                        </div>
+                        
+                        <div class="playerImg">
+                            <img class={opponentUserCss} src={opponentUserPhotoURL} title={opponentUserName}/>    
+                        </div>
+                        <table>
+                            <template for:each={boardRows} for:item='rowItem'>
+                                <tr key={rowItem.rowNumber}>
+                                    <template for:each={rowItem.rowCells} for:item='cellItem'>
+                                        <td class={cellItem.classStlye} key={cellItem.keyCell}>
+                                            <!-- START TEMP 
+                                            <template if:true={cellItem.isPlayer1Status}>
+                                                <div onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='1' class="player1Tool"></div>
+                                            </template>
+
+                                            <template if:true={cellItem.isPlayer2Status}>
+                                                <div onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='2' class="player2Tool"></div>
+                                            </template>
+                                             -END TEMP -->
+                                            
+                                            <template if:true={isCurrentUserIsP1}>
+                                                <template if:true={cellItem.isPlayer1Status}>
+                                                    <template if:true={isTurnUser1}>
+                                                        <div onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='1' class="player1Tool" style="cursor: pointer;">
+                                                            <template if:true={cellItem.isKing}>
+                                                                <div class="kingStyle" onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='1'>
+                                                                    &#9813;
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+
+                                                    <template if:false={isTurnUser1}>
+                                                        <div class="player1Tool">
+                                                            <template if:true={cellItem.isKing}>
+                                                                <div class="kingStyle">
+                                                                    &#9813;
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+                                                </template>
+
+                                                <template if:true={cellItem.isPlayer2Status}>
+                                                    <div class="player2Tool">
+                                                        <template if:true={cellItem.isKing}>
+                                                            <div class="kingStyle">
+                                                                &#9819;
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                            
+                                            <template if:true={isCurrentUserIsP2}>
+
+                                                <template if:true={cellItem.isPlayer2Status}>
+                                                    <template if:false={isTurnUser1}>
+                                                        <div onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='2' class="player2Tool" style="cursor: pointer;">
+                                                            <template if:true={cellItem.isKing}>
+                                                                <div class="kingStyle" onclick={cellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='2'>
+                                                                    &#9819;
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+
+                                                    <template if:true={isTurnUser1}>
+                                                        <div class="player2Tool">
+                                                            <template if:true={cellItem.isKing}>
+                                                                <div class="kingStyle">
+                                                                    &#9819;
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+                                                </template>
+
+                                                <template if:true={cellItem.isPlayer1Status}>
+                                                    <div class="player1Tool">
+                                                        <template if:true={cellItem.isKing}>
+                                                            <div class="kingStyle">
+                                                                &#9813;
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                            
+                                            <template if:true={isCurrentUserViewer}>
+                                                <template if:true={cellItem.isPlayer1Status}>
+                                                    <div class="player1Tool">
+                                                        <template if:true={cellItem.isKing}>
+                                                            <div class="kingStyle">
+                                                                &#9813;
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                <template if:true={cellItem.isPlayer2Status}>
+                                                    <div class="player2Tool">
+                                                        <template if:true={cellItem.isKing}>
+                                                            <div class="kingStyle">
+                                                                &#9819;
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                            </template>
+
+                                            <template if:true={cellItem.showPlayer1Option}>
+                                                <div onclick={optionalCellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='1' class='optionalMoveP1' style="cursor: pointer;"></div>
+                                            </template>
+                                            <template if:true={cellItem.showPlayer2Option}>
+                                                <div onclick={optionalCellClicked} data-row={cellItem.rowNumber} data-col={cellItem.colNumber} data-player='2' class='optionalMoveP2' style="cursor: pointer;"></div>
+                                            </template>
+                                       </td>
+                                    </template>
+                                </tr>
+                            </template>
+                        </table>
+                        
+                        <div class="playerImg">
+                            <img class={mainUserCss} src={mainUserPhotoURL} title={mainUserName}/>    
+                        </div>
+                    </div>
+                </td>
+                
+                <td style="width:25%; vertical-align: top;">
+                    <div class="movementsPanel">
+                        <table cellspacing="0" cellpadding="0" style="min-width: 200px;">
+                            <tr>
+                                <th>No.</th>
+                                <th>Player 1</th>
+                                <th>Player 2</th>
+                            </tr>
+                            <template for:each={movementsLogs} for:item='moveItem'>
+                                <tr key={moveItem.index}>
+                                    <td>{moveItem.index}</td>
+                                    <td style="min-width: 100px;"><lightning-formatted-rich-text value={moveItem.player1Move}></lightning-formatted-rich-text></td>
+                                    <td style="min-width: 100px;"><lightning-formatted-rich-text value={moveItem.player2Move}></lightning-formatted-rich-text></td>
+                                </tr>
+                            </template>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </template>
+</template>
